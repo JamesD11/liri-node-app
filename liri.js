@@ -1,3 +1,6 @@
+//pushed to github w/o mods cannot figure out git ignore. 
+//mods used were npm request twitter spotify debug
+
 var fs = require('fs');
 //require the keys from twitter
 var keys = require("./keys.js");
