@@ -1,0 +1,32 @@
+{
+  "name": "liri-node-app",
+  "version": "1.0.0",
+  "description": "liri app",
+  "main": "liri.js",
+  "dependencies": {
+    "omdb": "^0.5.0",
+    "prompt": "^1.0.0",
+    "request": "^2.69.0",
+    "require": "^2.4.20",
+    "spotify": "^0.3.0",
+    "twitter": "^1.2.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JamesD11/liri-node-app.git"
+  },
+  "keywords": [
+    "node",
+    "javascript"
+  ],
+  "author": "James D",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JamesD11/liri-node-app/issues"
+  },
+  "homepage": "https://github.com/JamesD11/liri-node-app#readme"
+}
