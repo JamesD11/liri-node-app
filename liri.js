@@ -1,4 +1,4 @@
-//pushed to github w/o mods cannot figure out git ignore. 
+//pushed to github w/o mods cannot figure out git ignore.
 //mods used were npm request twitter spotify debug
 
 var fs = require('fs');
@@ -47,46 +47,63 @@ function twitter(){
 
 	    client.get("count = 20", function(error, tweets, response){
   		if(error) throw error;
-  		console.log(tweets);  // Last 20. 
-  		console.log(response);  // Raw response object. 
+  		console.log(tweets);  // Last 20.
+  		console.log(response);  // Raw response object.
 });
 
 }
 
-​function noEntry(){
-	fs.readFile("random.txt" , 'utf-8', function(err,data){
+function noEntry(){
+	fs.readFile('random.txt' , 'utf-8', function(err,data){
 		if(err){
 			return console.log(err);
-		}
-		//I think the hw wants me to read the txt file and use that to call spotify
-		//Read the file, split it on "," resulting in a two part array
-		//take each part and assign it to the input array 
-	var result= data.split(",");
-	result[0] = input[0];
-	result[1] = input[1];
+		}else{
+		  console.log(data);
+    	var result= data.split(",");
 
+        if (result == 2){
+          pick(result[0],result[1]);
+        }else if (result == 1){
+          pick(result[0]);
+        }
+}
 });
+}
 
 
-function request(){
-	request("http://www.omdbapi.com/?t=" + input[1] + "&y=&plot=short&tomatoes=true&r=json", function (error, response, body) {
+function movie(movieName){
+
+	if (movieName === undefined){
+		movieName = 'Mr Nobody';
+	}
+
+  var urlHit = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=full&tomatoes=true&r=json";
+
+  request(urlHit, function (error, response, body) {
+
   	if (!error && response.statusCode == 200) {
     	var result =  JSON.parse(body);
     	console.log(result.imdbRating);
     	console.log(result.title);
-    	console.log(results.tomatoes);
+    	console.log(result.tomatoeURL);
     	console.log(result.plot);
+      console.log(result.rated);
+      console.log(result.language);
+      console.log(result.country);
+      console.log(result.plot);
+      console.log(result.actors);
+      console.log(result.tomatoeRating);
   }
- 
-})
 
+});
+}
 
 function spotify(){
-	
+
  spotify.search({ type: "track", query: input[1] }, function(err, data) {
    if ( err ) {
        console.log("Error: " + err);
-       return;  
+       return;
    }
    else{
    var songInfo = data.tracks.items[0];
@@ -94,8 +111,6 @@ function spotify(){
    console.log("name: ", songInfo.name);
    console.log("album: ", songInfo.album.name);
    console.log("link: ", songInfo.preview_url);
-   
+
    };
  });
-
- 
