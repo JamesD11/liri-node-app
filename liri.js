@@ -98,19 +98,27 @@ function movie(movieName){
 });
 }
 
-function spotify(){
+function spotify(songName){
 
- spotify.search({ type: "track", query: input[1] }, function(err, data) {
+  if (songName === undefined){
+		songName = 'Ocean Avenue';
+	}
+
+ spotify.search({ type: "track", query: songName }, function(err, data) {
    if ( err ) {
        console.log("Error: " + err);
        return;
    }
-   else{
-   var songInfo = data.tracks.items[0];
-   console.log("artist: ", songInfo.artists[0].name);
+
+   var songInfo = data.tracks.items;
+
+   for (var i = 0; i < songInfo.length; i++) {
+   console.log(i);
+   console.log("artist: ", songInfo.artist[i].name);
    console.log("name: ", songInfo.name);
    console.log("album: ", songInfo.album.name);
    console.log("link: ", songInfo.preview_url);
 
-   };
- });
+
+  });
+ }
