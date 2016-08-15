@@ -1,5 +1,3 @@
-//pushed to github w/o mods cannot figure out git ignore.
-//mods used were npm request twitter spotify debug
 
 var fs = require('fs');
 //require the keys from twitter
@@ -10,31 +8,6 @@ var request = require("request");
 //cut first two arguments off leaving an array "input" with two arguements
 var input = process.argv.slice(2);
 
-//switch statement based on input[0]
-switch(input[0]){
-    case "my-tweets"://if input[0] = my-tweets call twitter() function
-        twitter();
-        break;
-    case "do-what-it-says":
-        noEntry();
-        break;
-    case "spotify-this-song":
-        if(input[1]){
-        	spotify();
-        }else{
-        	input[1]= "What's my age again";
-        	spotify();
-        }
-        break;
-    case "movie-this":
-        if(input[1]){
-        	request();
-        }else{
-        	input[1]= "Mr. Nobdy";
-        	request();
-        }
-        break;
-}
 
 function twitter(){
 	//trying to call twitter based on npm and twitter docs
@@ -45,29 +18,18 @@ function twitter(){
         access_token_secret: keys.twitterKeys.access_token_secret
     });
 
-	    client.get("count = 20", function(error, tweets, response){
-  		if(error) throw error;
-  		console.log(tweets);  // Last 20.
-  		console.log(response);  // Raw response object.
+    var params = {screen_name: ' '};
+    client.get('statuses/user_timeline', params, function(error, tweets, response){
+  if (!error) {
+
+    for(var i=0; i < tweets.length; i++){
+      console.log(tweets[i].created_at);
+      console.log('');
+      console.log(tweets[i].text);
+    }
+  }
 });
 
-}
-
-function noEntry(){
-	fs.readFile('random.txt' , 'utf-8', function(err,data){
-		if(err){
-			return console.log(err);
-		}else{
-		  console.log(data);
-    	var result= data.split(",");
-
-        if (result == 2){
-          pick(result[0],result[1]);
-        }else if (result == 1){
-          pick(result[0]);
-        }
-}
-});
 }
 
 
@@ -98,6 +60,10 @@ function movie(movieName){
 });
 }
 
+function getArtist(artist){
+	return artist.name;
+}
+
 function spotify(songName){
 
   if (songName === undefined){
@@ -120,5 +86,43 @@ function spotify(songName){
    console.log("link: ", songInfo.preview_url);
 
 
-  });
+  }
+});
+
+function doWhatItSays(){
+	fs.readFile('random.txt' , 'utf-8', function(err,data){
+		if(err){
+			return console.log(err);
+		}else{
+		  console.log(data);
+    	var result= data.split(",");
+
+        if (result == 2){
+          pick(result[0],result[1]);
+        }else if (result == 1){
+          pick(result[0]);
+        }
+}
+});
+}
+
+function pick(input){
+//switch statement based on input
+switch(input[0]){
+    case "my-tweets":
+        twitter();
+        break;
+    case "do-what-it-says":
+        doWhatItSays();
+        break;
+    case "spotify-this-song":
+        	spotify(input[1]);
+        break;
+    case "movie-this":
+        	request(input[1]);
+        break;
+    default:
+     console.log('Not familiar with that');
  }
+}
+}
